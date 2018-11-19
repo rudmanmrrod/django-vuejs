@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block 'title'%}{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+  <script type="text/javascript" src="{% static 'js/vue.js' %}"></script>
+  {% block 'extraCss'%}{% endblock %}
+</head>
+<body>
+  <div class="container">
+    {% block 'content %}{% endblock %}
+  </div>
+  {% block 'extraJs %}{% endblock %}
+</body>
+</html>

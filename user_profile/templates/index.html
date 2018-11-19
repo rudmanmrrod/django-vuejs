@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block 'content %}
+  <h1 class="text-center">Django + VueJs </h1>
+  <div id="app">
+    [[ message ]]
+  </div>
+{% endblock %}
+{% block 'extraJs %}
+  <script>
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data: {
+        message: 'Vue it"s here!'
+      }
+    })
+  </script>
+{% endblock %}
