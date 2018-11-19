@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block 'content %}
+  <h1 class="text-center">Create User</h1><hr>
+  <form id="app" v-on:submit.prevent="onSubmit">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-4">
+          <label>{{form.username.label}}</label>
+          {{form.username}}
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+          <label>{{form.password1.label}}</label>
+          {{form.password1}}
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+          <label>{{form.password2.label}}</label>
+          {{form.password2}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-4">
+          <label>{{form.first_name.label}}</label>
+          {{form.first_name}}
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+          <label>{{form.last_name.label}}</label>
+          {{form.last_name}}
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+          <label>{{form.email.label}}</label>
+          {{form.email}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-sm-3 col-xs-3">
+          <label>{{form.dni_number.label}}</label>
+          {{form.dni_number}}
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3">
+          <label>{{form.address.label}}</label>
+          {{form.address}}
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3">
+          <label>{{form.zip_code.label}}</label>
+          {{form.zip_code}}
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3">
+          <label>{{form.gender.label}}</label>
+          {{form.gender}}
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-success">Submit</button>
+      </div>
+    </div>
+  </form>
+{% endblock %}
+{% block 'extraJs %}
+  <script>
+    var app = new Vue({
+      delimiters: ['[[', ']]'],
+      el: '#app',
+      data: {
+        csrfmiddlewaretoken: '',
+        username: '',
+        email: '',
+        password1: '',
+        password2: '',
+        first_name: '',
+        last_name: '',
+        dni_number: '',
+        address: '',
+        zip_code: '',
+        gender: ''
+      },
+      methods:  {
+        onSubmit: function() {
+          var form = new FormData();
+          form.append('username',this.username)
+          form.append('email',this.email)
+          form.append('password1',this.password1)
+          form.append('password2',this.password2)
+          form.append('first_name',this.first_name)
+          form.append('last_name',this.last_name)
+          form.append('dni_number',this.dni_number)
+          form.append('address',this.address)
+          form.append('zip_code',this.zip_code)
+          form.append('gender',this.gender)
+          axios.post('http://localhost:8000/create',form, {'headers':{
+            'X-CSRFToken': this.csrfmiddlewaretoken,
+            'Content-Type': 'multipart/form-data' 
+          }})
+          .then(response => {
+            console.log(response)
+          })
+          .catch( err => {
+            console.log(err.response);
+            console.log("err")
+          })
+        }
+      },
+      mounted: function(){
+        this.csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
+      }
+    })
+  </script>
+{% endblock %}
