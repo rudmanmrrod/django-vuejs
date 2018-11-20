@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
+  """!
+  Clase para generar el modelo del perfil
+
+  @author Rodrigo Boet (rudmanmrrod at gmail.com)
+  @date 19-11-2018
+  @version 1.0.0
+  """
   
   dni_number = models.PositiveIntegerField()
 

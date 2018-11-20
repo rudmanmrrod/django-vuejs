@@ -3,6 +3,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 class RegisterForm(UserCreationForm):
+  """!
+  Formulario para registrar el usuario
+
+  @author Rodrigo Boet (rudmanmrrod at gmail.com)
+  @date 19-11-2018
+  @version 1.0.0
+  """
   class Meta:
     model = User
     fields = ['password1', 'password2',
@@ -21,6 +28,13 @@ class RegisterForm(UserCreationForm):
     choices = (('M','MALE'),('F','FEMALE')))
 
   def __init__(self, *args, **kwargs):
+    """!
+    Método para iniciar el formulario
+
+    @author Rodrigo Boet (rudmanmrrod at gmail.com)
+    @date 19-11-2018
+    @version 1.0.0
+    """
     super().__init__(*args, **kwargs)
 
     self.fields['username'].widget.attrs.update(
@@ -44,6 +58,13 @@ class RegisterForm(UserCreationForm):
     self.fields['last_name'].required = True
 
   def clean(self):
+    """!
+    Método para validar el formulario
+
+    @author Rodrigo Boet (rudmanmrrod at gmail.com)
+    @date 19-11-2018
+    @version 1.0.0
+    """
     cleaned_data = super(RegisterForm, self).clean()
     email = cleaned_data.get("email")
     password1 = cleaned_data.get("password1")

@@ -5,13 +5,35 @@ from .forms import *
 from .models import *
 
 class IndexTemplate(TemplateView):
+  """!
+  Clase para cargar el index.html
+
+  @author Rodrigo Boet (rudmanmrrod at gmail.com)
+  @date 19-11-2018
+  @version 1.0.0
+  """
   template_name = "index.html"
 
 class CreateUserView(FormView):
+  """!
+  Clase para registrar un usuario y su perfil
+
+  @author Rodrigo Boet (rudmanmrrod at gmail.com)
+  @date 19-11-2018
+  @version 1.0.0
+  """
   template_name = "create.user.html"
   form_class = RegisterForm
 
   def form_valid(self,form):
+    """!
+    Método si el formulario es válido
+
+    @author Rodrigo Boet (rudmanmrrod at gmail.com)
+    @date 19-11-2018
+    @param form Recibe como parámetro el formulario
+    @version 1.0.0
+    """
     user = User()
     user.username = form.cleaned_data['username']
     user.email = form.cleaned_data['email']
@@ -29,4 +51,12 @@ class CreateUserView(FormView):
     return JsonResponse({'message':'Create Successfully','valid':True})
 
   def form_invalid(self,form):
+    """!
+    Método si el formulario es inválido
+
+    @author Rodrigo Boet (rudmanmrrod at gmail.com)
+    @date 19-11-2018
+    @param form Recibe como parámetro el formulario
+    @version 1.0.0
+    """
     return JsonResponse({'error':form.errors,'valid':False})
