@@ -5,6 +5,10 @@
   <div id="app">
     [[ message ]]
   </div>
+  <br>
+  <div class="content text-center">
+    <a class="btn btn-success" href="{% url 'user_profile_create' %}">Create User</a>
+  </div>
 {% endblock %}
 {% block 'extraJs %}
   <script>

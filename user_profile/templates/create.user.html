@@ -9,50 +9,101 @@
         <div class="col-md-4 col-sm-4 col-xs-4">
           <label>{{form.username.label}}</label>
           {{form.username}}
+          <div class="text-danger" v-if="errors['username'].lenght != 0">
+            <ul v-for="error in errors['username']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-4 col-sm-4 col-xs-4">
           <label>{{form.password1.label}}</label>
           {{form.password1}}
+          <div class="text-danger" v-if="errors['password1'].lenght != 0">
+            <ul v-for="error in errors['password1']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-4 col-sm-4 col-xs-4">
           <label>{{form.password2.label}}</label>
           {{form.password2}}
+          <div class="text-danger" v-if="errors['password2'].lenght != 0">
+            <ul v-for="error in errors['password2']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-4 col-sm-4 col-xs-4">
           <label>{{form.first_name.label}}</label>
           {{form.first_name}}
+          <div class="text-danger" v-if="errors['first_name'].lenght != 0">
+            <ul v-for="error in errors['first_name']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-4 col-sm-4 col-xs-4">
           <label>{{form.last_name.label}}</label>
           {{form.last_name}}
+          <div class="text-danger" v-if="errors['last_name'].lenght != 0">
+            <ul v-for="error in errors['last_name']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-4 col-sm-4 col-xs-4">
           <label>{{form.email.label}}</label>
           {{form.email}}
+          <div class="text-danger" v-if="errors['email'].lenght != 0">
+            <ul v-for="error in errors['email']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-3 col-sm-3 col-xs-3">
           <label>{{form.dni_number.label}}</label>
           {{form.dni_number}}
+          <div class="text-danger" v-if="errors['dni_number'].lenght != 0">
+            <ul v-for="error in errors['dni_number']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-3">
           <label>{{form.address.label}}</label>
           {{form.address}}
+          <div class="text-danger" v-if="errors['address'].lenght != 0">
+            <ul v-for="error in errors['address']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-3">
           <label>{{form.zip_code.label}}</label>
           {{form.zip_code}}
+          <div class="text-danger" v-if="errors['zip_code'].lenght != 0">
+            <ul v-for="error in errors['zip_code']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
         <div class="col-md-3 col-sm-3 col-xs-3">
           <label>{{form.gender.label}}</label>
           {{form.gender}}
+          <div class="text-danger" v-if="errors['gender'].lenght != 0">
+            <ul v-for="error in errors['gender']">
+              <li>[[error]]</li>
+            </ul>
+          </div>
         </div>
       </div>
       <br>
       <div class="text-center">
+        <a class="btn btn-info" href="{% url 'index' %}">Back</a>
         <button class="btn btn-success">Submit</button>
       </div>
     </div>
@@ -74,7 +125,19 @@
         dni_number: '',
         address: '',
         zip_code: '',
-        gender: ''
+        gender: '',
+        errors: {
+          'username':[],
+          'email':[],
+          'password1':[],
+          'password2':[],
+          'first_name':[],
+          'last_name':[],
+          'dni_number':[],
+          'address':[],
+          'zip_code':[],
+          'gender':[],
+        }
       },
       methods:  {
         onSubmit: function() {
@@ -94,12 +157,35 @@
             'Content-Type': 'multipart/form-data' 
           }})
           .then(response => {
-            console.log(response)
+            if(response.data['valid']){
+              console.log(response.data['message'])
+              window.location = '/'
+            }
+            else{
+              this.clear()
+              for(field in response.data['error']){
+                this.errors[field] = response.data['error'][field]
+              }
+            }
           })
           .catch( err => {
             console.log(err.response);
             console.log("err")
           })
+        },
+        clear: function(){
+          this.errors = {
+            'username':[],
+            'email':[],
+            'password1':[],
+            'password2':[],
+            'first_name':[],
+            'last_name':[],
+            'dni_number':[],
+            'address':[],
+            'zip_code':[],
+            'gender':[],
+          }
         }
       },
       mounted: function(){
