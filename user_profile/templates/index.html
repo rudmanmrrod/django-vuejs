@@ -12,10 +12,16 @@
 {% endblock %}
 {% block 'extraJs %}
   <script>
+    /**
+    * Instancia principal de Vue
+    */
     var app = new Vue({
       delimiters: ['[[', ']]'],
       el: '#app',
       data: {
+        /**
+        * Objeto que almacena el mensaje mostrado en el html
+        */
         message: 'Vue it"s here!'
       }
     })

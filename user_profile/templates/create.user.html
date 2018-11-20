@@ -111,21 +111,60 @@
 {% endblock %}
 {% block 'extraJs %}
   <script>
+    /**
+    * Instancia principal de Vue
+    */
     var app = new Vue({
       delimiters: ['[[', ']]'],
       el: '#app',
       data: {
+        /**
+        * Objeto que almacena el csrf token de Django
+        */
         csrfmiddlewaretoken: '',
+        /**
+        * Objeto que sirve como modelo para el nombre de usuario
+        */
         username: '',
+        /**
+        * Objeto que sirve como modelo para el correo
+        */
         email: '',
+        /**
+        * Objeto que sirve como modelo para la contraseña
+        */
         password1: '',
+        /**
+        * Objeto que sirve como modelo para el repetir contraseña
+        */
         password2: '',
+        /**
+        * Objeto que sirve como modelo para el primer nombre del usuario
+        */
         first_name: '',
+        /**
+        * Objeto que sirve como modelo para el apellido del usuario
+        */
         last_name: '',
+        /**
+        * Objeto que sirve como modelo para el número de identificación
+        */
         dni_number: '',
+        /**
+        * Objeto que sirve como modelo para la dirección
+        */
         address: '',
+        /**
+        * Objeto que sirve como modelo para el código postal
+        */
         zip_code: '',
+        /**
+        * Objeto que sirve como modelo para el género del usuario
+        */
         gender: '',
+        /**
+        * Objeto que sirve para almacenar los errores de los campos
+        */
         errors: {
           'username':[],
           'email':[],
@@ -140,6 +179,9 @@
         }
       },
       methods:  {
+        /**
+        * Método para envíar el formulario
+        */
         onSubmit: function() {
           var form = new FormData();
           form.append('username',this.username)
@@ -173,6 +215,9 @@
             console.log("err")
           })
         },
+        /**
+        * Método para limpiar el objeto de errores
+        */
         clear: function(){
           this.errors = {
             'username':[],
@@ -188,6 +233,10 @@
           }
         }
       },
+      /**
+      * Método al cargar el componente
+      * Asigna el csrf token de Django en la propiedad del objeto
+      */
       mounted: function(){
         this.csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value
       }
